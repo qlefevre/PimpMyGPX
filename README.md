@@ -1,1 +1,1 @@
-# pimpmygpx
+# PimpMyGPX
