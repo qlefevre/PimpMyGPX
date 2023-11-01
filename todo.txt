@@ -1,0 +1,6 @@
+changer heure debut
+changer heure fin
+changer vitesse avec coef
+changer date
+décaler les points gauche droite bas haut
+fusionner strava + montre heartrate gpx
