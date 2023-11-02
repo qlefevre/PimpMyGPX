@@ -1,6 +1,8 @@
 package com.github.pimpmygpx;
 
 import io.jenetics.jpx.GPX;
+import io.jenetics.jpx.GPX.Writer;
+import io.jenetics.jpx.GPX.Writer.Indent;
 import org.apache.commons.cli.*;
 
 import java.nio.file.Paths;
@@ -26,10 +28,11 @@ public class MainCli {
 
         if(cmd.hasOption("help") || args.length == 0) {
             String header = "Do something useful with a GPX file\n";
-            String footer = "Please report issues at http://example.com/issues";
+            String footer = "Please report issues at https://github.com/qlefevre/PimpMyGPX";
 
             System.out.println("PimpMyGPX 1.0 ");
             HelpFormatter formatter = new HelpFormatter();
+            formatter.setOptionComparator((o1, o2) -> 0);
             formatter.printHelp("pmgpx [OPTION]... [FILE]", header, options, footer);
         }else
         // A-t-ton bien un seul argument de fichier
@@ -43,14 +46,14 @@ public class MainCli {
             // start time
             if (cmd.hasOption("start-time")) {
                 String startTime = cmd.getOptionValue("start-time");
-                LocalTime localTime = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"));
+                LocalTime localTime = LocalTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_TIME);
                 outputGpx = GpxUtils.changeStartTime(inputGpx,localTime);
             }
 
             // finish time
             if (cmd.hasOption("finish-time")) {
                 String finishTime = cmd.getOptionValue("finish-time");
-                LocalTime localTime = LocalTime.parse(finishTime, DateTimeFormatter.ofPattern("HH:mm"));
+                LocalTime localTime = LocalTime.parse(finishTime, DateTimeFormatter.ISO_LOCAL_TIME);
                 outputGpx = GpxUtils.changeFinishTime(inputGpx,localTime);
             }
 
@@ -63,7 +66,7 @@ public class MainCli {
 
             // Output file
             Path outputFile = Paths.get(inputFile.toString().replace(".gpx",".out.gpx"));
-            GPX.write(outputGpx, outputFile);
+            Writer.of(new Indent(" ")).write(outputGpx, outputFile);
         }
 
 
@@ -72,10 +75,10 @@ public class MainCli {
     private static Options getOptions() throws ParseException {
         // Options
         Options options = new Options();
-        Option sOption = new Option("s", "start-time", true, "Change start time in hh:mm format");
+        Option sOption = new Option("s", "start-time", true, "Change start time in hh:mm or hh:mm:ss format");
         sOption.setArgName("hour");
         options.addOption(sOption);
-        Option fOption = new Option("f", "finish-time", true, "Change finish time in hh:mm format");
+        Option fOption = new Option("f", "finish-time", true, "Change finish time in hh:mm or hh:mm:ss format");
         fOption.setArgName("hour");
         options.addOption(fOption);
         Option dOption = new Option("d", "date", true, "Change the date");
