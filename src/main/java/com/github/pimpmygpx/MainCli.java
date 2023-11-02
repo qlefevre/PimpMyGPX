@@ -14,6 +14,8 @@ import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
 
 public class MainCli {
+    public static final int DEFAULT_FRACTION_DIGITS = 7;
+    public static final Indent DEFAULT_INDENT = new Indent(" ");
 
     public static void main(String[] args) throws Exception {
 
@@ -66,7 +68,7 @@ public class MainCli {
 
             // Output file
             Path outputFile = Paths.get(inputFile.toString().replace(".gpx",".out.gpx"));
-            Writer.of(new Indent(" ")).write(outputGpx, outputFile);
+            Writer.of(DEFAULT_INDENT,DEFAULT_FRACTION_DIGITS).write(outputGpx, outputFile);
         }
 
 
