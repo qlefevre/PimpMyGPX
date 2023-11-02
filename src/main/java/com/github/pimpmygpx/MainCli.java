@@ -81,7 +81,7 @@ public class MainCli {
         Option fOption = new Option("f", "finish-time", true, "Change finish time in hh:mm or hh:mm:ss format");
         fOption.setArgName("hour");
         options.addOption(fOption);
-        Option dOption = new Option("d", "date", true, "Change the date");
+        Option dOption = new Option("d", "date", true, "Change the date in yyyy-mm-dd format");
         dOption.setArgName("date");
         options.addOption(dOption);
         Option oOption = new Option("o", "output", true, "Set output file");
