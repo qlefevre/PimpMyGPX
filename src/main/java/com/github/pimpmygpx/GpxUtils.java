@@ -5,10 +5,8 @@ import io.jenetics.jpx.Track;
 import io.jenetics.jpx.TrackSegment;
 import io.jenetics.jpx.WayPoint;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +24,9 @@ public class GpxUtils {
                 .map(Optional::get);
     }
 
-    public static GPX changeFinishTime(GPX gpx, int hours, int minutes) {
+    public static GPX changeFinishTime(GPX gpx,  LocalTime localTime) {
+        int hours = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
+        int minutes = localTime.get(ChronoField.MINUTE_OF_HOUR);
         Optional<Instant> max = streamWayPointTimes(gpx).max(Instant::compareTo);
         if (max.isPresent()) {
             Instant currentFinishTimeInstant = max.get();
@@ -40,7 +40,9 @@ public class GpxUtils {
         return null;
     }
 
-    public static GPX changeStartTime(GPX gpx, int hours, int minutes) {
+    public static GPX changeStartTime(GPX gpx, LocalTime localTime) {
+        int hours = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
+        int minutes = localTime.get(ChronoField.MINUTE_OF_HOUR);
         Optional<Instant> min = streamWayPointTimes(gpx).min(Instant::compareTo);
         if (min.isPresent()) {
             Instant currentStartTimeInstant = min.get();
