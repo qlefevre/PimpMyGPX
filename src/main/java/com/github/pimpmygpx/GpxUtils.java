@@ -8,9 +8,7 @@ import io.jenetics.jpx.WayPoint;
 import java.time.*;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GpxUtils {
@@ -24,7 +22,7 @@ public class GpxUtils {
                 .map(Optional::get);
     }
 
-    public static GPX changeFinishTime(GPX gpx,  LocalTime localTime) {
+    public static GPX changeFinishTime(GPX gpx, LocalTime localTime) {
         int hours = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
         int minutes = localTime.get(ChronoField.MINUTE_OF_HOUR);
         Optional<Instant> max = streamWayPointTimes(gpx).max(Instant::compareTo);
@@ -61,47 +59,37 @@ public class GpxUtils {
         if (min.isPresent()) {
             Instant currentStartTimeInstant = min.get();
             LocalDateTime currentStartTimeLdt = LocalDateTime.ofInstant(currentStartTimeInstant, ZoneId.systemDefault());
-           int currentDayOfyear = currentStartTimeLdt.getDayOfYear();
-           int finalDayOfYear = localdate.getDayOfYear();
-            int deltaMinutes = (finalDayOfYear - currentDayOfyear)*1440;
+            int currentDayOfyear = currentStartTimeLdt.getDayOfYear();
+            int finalDayOfYear = localdate.getDayOfYear();
+            int deltaMinutes = (finalDayOfYear - currentDayOfyear) * 1440;
             return addXMinutesToAllWayPoints(gpx, deltaMinutes);
         }
         return null;
     }
 
     public static GPX moveWayPoints(GPX gpx, double deltaLatitude, double deltaLongitude) {
-        // Calculer différence
-        List<Track> tracks =
-                gpx.tracks().map(track -> {
-                    List<TrackSegment> segments = track.segments().map(segment -> {
-                        List<WayPoint> points = segment.points().map(point ->
-                                        point.toBuilder()
-                                                .lat(point.getLatitude().doubleValue()
-                                                        + deltaLatitude)
-                                                .lon(point.getLongitude().doubleValue() + deltaLongitude)
-                                                .build())
-                                .collect(Collectors.toList());
-                        return segment.toBuilder().points(points).build();
-                    }).collect(Collectors.toList());
-                    return track.toBuilder().segments(segments).build();
-                }).collect(Collectors.toList());
-        return gpx.toBuilder().tracks(tracks).build();
+        // Modifier latitude longitude
+        return gpx.toBuilder()
+            .wayPointFilter()
+            .map(wp -> wp.toBuilder()
+                .lat(wp.getLatitude().doubleValue() + deltaLatitude)
+                .lon(wp.getLongitude().doubleValue() + deltaLongitude)
+            .build())
+            .build()
+            .build();
     }
 
     private static GPX addXMinutesToAllWayPoints(GPX gpx, int plusMinutes) {
         // Calculer différence
-        List<Track> tracks =
-                gpx.tracks().map(track -> {
-                    List<TrackSegment> segments = track.segments().map(segment -> {
-                        List<WayPoint> points = segment.points().map(point ->
-                                        point.toBuilder().time(point.getTime().get()
-                                                .plus(plusMinutes, ChronoUnit.MINUTES)).build())
-                                .collect(Collectors.toList());
-                        return segment.toBuilder().points(points).build();
-                    }).collect(Collectors.toList());
-                    return track.toBuilder().segments(segments).build();
-                }).collect(Collectors.toList());
-        return gpx.toBuilder().tracks(tracks).build();
+        return gpx.toBuilder()
+            .wayPointFilter()
+            .map(wp -> wp.toBuilder()
+                .time(wp.getTime()
+                    .map(t -> t.plus(plusMinutes, ChronoUnit.MINUTES))
+                    .orElse(null))
+                .build())
+            .build()
+            .build();
     }
 
 
