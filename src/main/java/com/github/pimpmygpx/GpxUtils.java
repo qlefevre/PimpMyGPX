@@ -1,15 +1,20 @@
 package com.github.pimpmygpx;
 
-import io.jenetics.jpx.GPX;
-import io.jenetics.jpx.Track;
-import io.jenetics.jpx.TrackSegment;
-import io.jenetics.jpx.WayPoint;
+import io.jenetics.jpx.*;
 
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import javax.xml.transform.Result;
+import java.io.IOException;
+import java.text.NumberFormat;
 import java.time.*;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Stream;
+
+import static java.util.Locale.ENGLISH;
 
 public class GpxUtils {
 
@@ -91,6 +96,8 @@ public class GpxUtils {
             .build()
             .build();
     }
+
+
 
 
 }
