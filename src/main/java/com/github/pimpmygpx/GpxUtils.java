@@ -32,7 +32,6 @@ public class GpxUtils {
         int finalDayOfYear = localdate.getDayOfYear();
         int deltaMinutes = (finalDayOfYear - currentDayOfyear) * 1440;
         return addXMinutesToAllWayPoints(gpx, deltaMinutes);
-
     }
 
     public static GPX moveWayPoints(GPX gpx, double deltaLatitude, double deltaLongitude) {
@@ -65,8 +64,7 @@ public class GpxUtils {
         LocalDateTime instantLdt = LocalDateTime.ofInstant(totem, ZoneId.systemDefault());
         int currentFinishMinutes = 60 * instantLdt.getHour() + instantLdt.getMinute();
         int finalFinishMinutes = 60 * hours + minutes;
-        int deltaMinutes = finalFinishMinutes - currentFinishMinutes;
-        return deltaMinutes;
+        return finalFinishMinutes - currentFinishMinutes;
     }
 
     private static GPX applyToAllWayPoints(GPX gpx, Function<WayPoint,WayPoint> function) {

@@ -35,6 +35,7 @@ public class MainCli {
             System.out.println("PimpMyGPX 1.0 ");
             HelpFormatter formatter = new HelpFormatter();
             formatter.setOptionComparator((o1, o2) -> 0);
+            formatter.setWidth(90);
             formatter.printHelp("pmgpx [OPTION]... [FILE]", header, options, footer);
         }else
         // A-t-ton bien un seul argument de fichier
