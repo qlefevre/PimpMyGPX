@@ -14,35 +14,15 @@ import java.util.stream.Stream;
 public class GpxUtils {
 
     public static GPX changeFinishTime(GPX gpx, LocalTime localTime) {
-        int hours = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
-        int minutes = localTime.get(ChronoField.MINUTE_OF_HOUR);
-        Optional<Instant> max = streamWayPoint(gpx,WayPoint::getTime).max(Instant::compareTo);
-        if (max.isPresent()) {
-            Instant currentFinishTimeInstant = max.get();
-            LocalDateTime currentFinishTimeLdt = LocalDateTime.ofInstant(currentFinishTimeInstant, ZoneId.systemDefault());
-            int currentFinishMinutes = 60 * currentFinishTimeLdt.getHour()
-                    + currentFinishTimeLdt.getMinute();
-            int finalFinishMinutes = 60 * hours + minutes;
-            int deltaMinutes = finalFinishMinutes - currentFinishMinutes;
-            return addXMinutesToAllWayPoints(gpx, deltaMinutes);
-        }
-        return null;
+        Instant currentFinishTimeInstant = streamWayPoint(gpx,WayPoint::getTime).max(Instant::compareTo).get();
+        int deltaMinutes = deltaMinutes(currentFinishTimeInstant,localTime);
+        return addXMinutesToAllWayPoints(gpx, deltaMinutes);
     }
 
     public static GPX changeStartTime(GPX gpx, LocalTime localTime) {
-        int hours = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
-        int minutes = localTime.get(ChronoField.MINUTE_OF_HOUR);
-        Optional<Instant> min = streamWayPoint(gpx,WayPoint::getTime).min(Instant::compareTo);
-        if (min.isPresent()) {
-            Instant currentStartTimeInstant = min.get();
-            LocalDateTime currentStartTimeLdt = LocalDateTime.ofInstant(currentStartTimeInstant, ZoneId.systemDefault());
-            int currentFinishMinutes = 60 * currentStartTimeLdt.getHour()
-                    + currentStartTimeLdt.getMinute();
-            int finalStartMinutes = 60 * hours + minutes;
-            int deltaMinutes = finalStartMinutes - currentFinishMinutes;
-            return addXMinutesToAllWayPoints(gpx, deltaMinutes);
-        }
-        return null;
+        Instant currentStartTimeInstant = streamWayPoint(gpx,WayPoint::getTime).min(Instant::compareTo).get();
+        int deltaMinutes = deltaMinutes(currentStartTimeInstant,localTime);
+        return addXMinutesToAllWayPoints(gpx, deltaMinutes);
     }
 
     public static GPX changeDate(GPX gpx, LocalDate localdate) {
@@ -82,6 +62,16 @@ public class GpxUtils {
         }
     }
 
+    private static int deltaMinutes(Instant totem, LocalTime localTime){
+        int hours = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
+        int minutes = localTime.get(ChronoField.MINUTE_OF_HOUR);
+        LocalDateTime instantLdt = LocalDateTime.ofInstant(totem, ZoneId.systemDefault());
+        int currentFinishMinutes = 60 * instantLdt.getHour() + instantLdt.getMinute();
+        int finalFinishMinutes = 60 * hours + minutes;
+        int deltaMinutes = finalFinishMinutes - currentFinishMinutes;
+        return deltaMinutes;
+    }
+
     private static GPX applyToAllWayPoints(GPX gpx, Function<WayPoint,WayPoint> function) {
         List<Track> tracks = gpx.tracks().map(track -> {
             List<TrackSegment> segments = track.segments().map(segment -> {
@@ -93,13 +83,6 @@ public class GpxUtils {
         return gpx.toBuilder().tracks(tracks).build();
     }
 
-    private static GPX addXMinutesToAllWayPoints(GPX gpx, int plusMinutes) {
-        // Calculer différence
-        return applyToAllWayPoints(gpx, point ->
-                point.toBuilder().time(point.getTime().get()
-                        .plus(plusMinutes, ChronoUnit.MINUTES)).build());
-    }
-
     private static <T> Stream<T> streamWayPoint(GPX gpx, Function<WayPoint,Optional<T>> function) {
         // WayPoint::getTime
         return gpx.tracks()
@@ -108,5 +91,12 @@ public class GpxUtils {
                 .map(function)
                 .filter(Optional::isPresent)
                 .map(Optional::get);
+    }
+
+    private static GPX addXMinutesToAllWayPoints(GPX gpx, int plusMinutes) {
+        // Calculer différence
+        return applyToAllWayPoints(gpx, point ->
+                point.toBuilder().time(point.getTime().get()
+                        .plus(plusMinutes, ChronoUnit.MINUTES)).build());
     }
 }
