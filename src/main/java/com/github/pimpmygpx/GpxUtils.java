@@ -26,16 +26,13 @@ public class GpxUtils {
     }
 
     public static GPX changeDate(GPX gpx, LocalDate localdate) {
-        Optional<Instant> min = streamWayPoint(gpx,WayPoint::getTime).min(Instant::compareTo);
-        if (min.isPresent()) {
-            Instant currentStartTimeInstant = min.get();
-            LocalDateTime currentStartTimeLdt = LocalDateTime.ofInstant(currentStartTimeInstant, ZoneId.systemDefault());
-            int currentDayOfyear = currentStartTimeLdt.getDayOfYear();
-            int finalDayOfYear = localdate.getDayOfYear();
-            int deltaMinutes = (finalDayOfYear - currentDayOfyear) * 1440;
-            return addXMinutesToAllWayPoints(gpx, deltaMinutes);
-        }
-        return null;
+        Instant currentStartTime = streamWayPoint(gpx,WayPoint::getTime).min(Instant::compareTo).get();
+        LocalDateTime currentStartTimeLdt = LocalDateTime.ofInstant(currentStartTime, ZoneId.systemDefault());
+        int currentDayOfyear = currentStartTimeLdt.getDayOfYear();
+        int finalDayOfYear = localdate.getDayOfYear();
+        int deltaMinutes = (finalDayOfYear - currentDayOfyear) * 1440;
+        return addXMinutesToAllWayPoints(gpx, deltaMinutes);
+
     }
 
     public static GPX moveWayPoints(GPX gpx, double deltaLatitude, double deltaLongitude) {
