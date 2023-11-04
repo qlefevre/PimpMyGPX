@@ -45,6 +45,9 @@ public class MainCli {
             GPX inputGpx = GPX.read(inputFile);
             GPX outputGpx = inputGpx;
 
+            // Supprime les <ele>
+            inputGpx = GpxUtils.removeElevations(inputGpx);
+
             // start time
             if (cmd.hasOption("start-time")) {
                 String startTime = cmd.getOptionValue("start-time");
