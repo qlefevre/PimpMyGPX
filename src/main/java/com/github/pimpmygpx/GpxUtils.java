@@ -10,8 +10,10 @@ import java.text.NumberFormat;
 import java.time.*;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Locale.ENGLISH;
@@ -74,27 +76,29 @@ public class GpxUtils {
 
     public static GPX moveWayPoints(GPX gpx, double deltaLatitude, double deltaLongitude) {
         // Modifier latitude longitude
-        return gpx.toBuilder()
-            .wayPointFilter()
-            .map(wp -> wp.toBuilder()
-                .lat(wp.getLatitude().doubleValue() + deltaLatitude)
-                .lon(wp.getLongitude().doubleValue() + deltaLongitude)
-            .build())
-            .build()
-            .build();
+        return applyToAllWayPoints(gpx, point ->
+            point.toBuilder()
+                .lat(point.getLatitude().doubleValue() + deltaLatitude)
+                .lon(point.getLongitude().doubleValue() + deltaLongitude)
+            .build());
+    }
+
+    private static GPX applyToAllWayPoints(GPX gpx, Function<WayPoint,WayPoint> function) {
+        List<Track> tracks = gpx.tracks().map(track -> {
+            List<TrackSegment> segments = track.segments().map(segment -> {
+                List<WayPoint> points = segment.points().map(function).collect(Collectors.toList());
+                return segment.toBuilder().points(points).build();
+            }).collect(Collectors.toList());
+            return track.toBuilder().segments(segments).build();
+        }).collect(Collectors.toList());
+        return gpx.toBuilder().tracks(tracks).build();
     }
 
     private static GPX addXMinutesToAllWayPoints(GPX gpx, int plusMinutes) {
         // Calculer différence
-        return gpx.toBuilder()
-            .wayPointFilter()
-            .map(wp -> wp.toBuilder()
-                .time(wp.getTime()
-                    .map(t -> t.plus(plusMinutes, ChronoUnit.MINUTES))
-                    .orElse(null))
-                .build())
-            .build()
-            .build();
+        return applyToAllWayPoints(gpx, point ->
+                point.toBuilder().time(point.getTime().get()
+                        .plus(plusMinutes, ChronoUnit.MINUTES)).build());
     }
 
     public static GPX removeElevations(GPX gpx) {
@@ -108,13 +112,8 @@ public class GpxUtils {
 
         // Si tous les éléments sont égals à zéro
         if(allElevationsEqualZero) {
-            GPX rGPX =  gpx.toBuilder()
-                    .wayPointFilter()
-                    .map(wp -> wp.toBuilder()
-                            .ele((Length)null)
-                            .build())
-                    .build()
-                    .build();
+            GPX rGPX = applyToAllWayPoints(gpx, point ->
+                point.toBuilder().ele(null).build());
             return rGPX;
         }else{
             return gpx;
