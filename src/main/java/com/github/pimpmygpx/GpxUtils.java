@@ -2,11 +2,6 @@ package com.github.pimpmygpx;
 
 import io.jenetics.jpx.*;
 
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.Result;
-import java.io.IOException;
-import java.text.NumberFormat;
 import java.time.*;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
@@ -16,23 +11,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.util.Locale.ENGLISH;
-
 public class GpxUtils {
-
-    public static Stream<Instant> streamWayPointTimes(GPX gpx) {
-        return gpx.tracks()
-                .flatMap(Track::segments)
-                .flatMap(TrackSegment::points)
-                .map(WayPoint::getTime)
-                .filter(Optional::isPresent)
-                .map(Optional::get);
-    }
 
     public static GPX changeFinishTime(GPX gpx, LocalTime localTime) {
         int hours = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
         int minutes = localTime.get(ChronoField.MINUTE_OF_HOUR);
-        Optional<Instant> max = streamWayPointTimes(gpx).max(Instant::compareTo);
+        Optional<Instant> max = streamWayPoint(gpx,WayPoint::getTime).max(Instant::compareTo);
         if (max.isPresent()) {
             Instant currentFinishTimeInstant = max.get();
             LocalDateTime currentFinishTimeLdt = LocalDateTime.ofInstant(currentFinishTimeInstant, ZoneId.systemDefault());
@@ -48,7 +32,7 @@ public class GpxUtils {
     public static GPX changeStartTime(GPX gpx, LocalTime localTime) {
         int hours = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
         int minutes = localTime.get(ChronoField.MINUTE_OF_HOUR);
-        Optional<Instant> min = streamWayPointTimes(gpx).min(Instant::compareTo);
+        Optional<Instant> min = streamWayPoint(gpx,WayPoint::getTime).min(Instant::compareTo);
         if (min.isPresent()) {
             Instant currentStartTimeInstant = min.get();
             LocalDateTime currentStartTimeLdt = LocalDateTime.ofInstant(currentStartTimeInstant, ZoneId.systemDefault());
@@ -62,7 +46,7 @@ public class GpxUtils {
     }
 
     public static GPX changeDate(GPX gpx, LocalDate localdate) {
-        Optional<Instant> min = streamWayPointTimes(gpx).min(Instant::compareTo);
+        Optional<Instant> min = streamWayPoint(gpx,WayPoint::getTime).min(Instant::compareTo);
         if (min.isPresent()) {
             Instant currentStartTimeInstant = min.get();
             LocalDateTime currentStartTimeLdt = LocalDateTime.ofInstant(currentStartTimeInstant, ZoneId.systemDefault());
@@ -83,6 +67,21 @@ public class GpxUtils {
             .build());
     }
 
+    public static GPX removeElevations(GPX gpx) {
+        boolean allElevationsEqualZero =
+                streamWayPoint(gpx,WayPoint::getElevation)
+                        .allMatch(ele -> ele.intValue() == 0);
+
+        // Si tous les éléments sont égals à zéro
+        if(allElevationsEqualZero) {
+            GPX rGPX = applyToAllWayPoints(gpx, point ->
+                    point.toBuilder().ele(null).build());
+            return rGPX;
+        }else{
+            return gpx;
+        }
+    }
+
     private static GPX applyToAllWayPoints(GPX gpx, Function<WayPoint,WayPoint> function) {
         List<Track> tracks = gpx.tracks().map(track -> {
             List<TrackSegment> segments = track.segments().map(segment -> {
@@ -101,25 +100,13 @@ public class GpxUtils {
                         .plus(plusMinutes, ChronoUnit.MINUTES)).build());
     }
 
-    public static GPX removeElevations(GPX gpx) {
-        boolean allElevationsEqualZero = gpx.tracks()
+    private static <T> Stream<T> streamWayPoint(GPX gpx, Function<WayPoint,Optional<T>> function) {
+        // WayPoint::getTime
+        return gpx.tracks()
                 .flatMap(Track::segments)
                 .flatMap(TrackSegment::points)
-                .map(WayPoint::getElevation)
+                .map(function)
                 .filter(Optional::isPresent)
-                .map(Optional::get)
-                .allMatch(ele -> ele.intValue() == 0);
-
-        // Si tous les éléments sont égals à zéro
-        if(allElevationsEqualZero) {
-            GPX rGPX = applyToAllWayPoints(gpx, point ->
-                point.toBuilder().ele(null).build());
-            return rGPX;
-        }else{
-            return gpx;
-        }
+                .map(Optional::get);
     }
-
-
-
 }
