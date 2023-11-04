@@ -43,7 +43,6 @@ public class MainCli {
             // Fichier d'entrée
             Path inputFile = Paths.get(cmd.getArgList().get(0));
             GPX inputGpx = GPX.read(inputFile);
-            GPX outputGpx = inputGpx;
 
             // Supprime les <ele>
             inputGpx = GpxUtils.removeElevations(inputGpx);
@@ -52,26 +51,33 @@ public class MainCli {
             if (cmd.hasOption("start-time")) {
                 String startTime = cmd.getOptionValue("start-time");
                 LocalTime localTime = LocalTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_TIME);
-                outputGpx = GpxUtils.changeStartTime(inputGpx,localTime);
+                inputGpx = GpxUtils.changeStartTime(inputGpx,localTime);
             }
 
             // finish time
             if (cmd.hasOption("finish-time")) {
                 String finishTime = cmd.getOptionValue("finish-time");
                 LocalTime localTime = LocalTime.parse(finishTime, DateTimeFormatter.ISO_LOCAL_TIME);
-                outputGpx = GpxUtils.changeFinishTime(inputGpx,localTime);
+                inputGpx = GpxUtils.changeFinishTime(inputGpx,localTime);
             }
 
             // date
             if (cmd.hasOption("date")) {
                 String date = cmd.getOptionValue("date");
                 LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
-                outputGpx = GpxUtils.changeDate(inputGpx,localDate);
+                inputGpx = GpxUtils.changeDate(inputGpx,localDate);
+            }
+
+            // lat / lon
+            if (cmd.hasOption("lat") || cmd.hasOption("lon")){
+                double lat = cmd.hasOption("lat") ? Double.parseDouble(cmd.getOptionValue("lat")) : 0;
+                double lon =  cmd.hasOption("lon") ? Double.parseDouble(cmd.getOptionValue("lon")) : 0;
+                inputGpx = GpxUtils.moveWayPoints(inputGpx,lat,lon);
             }
 
             // Output file
             Path outputFile = Paths.get(inputFile.toString().replace(".gpx",".out.gpx"));
-            Writer.of(DEFAULT_INDENT,DEFAULT_FRACTION_DIGITS).write(outputGpx, outputFile);
+            Writer.of(DEFAULT_INDENT,DEFAULT_FRACTION_DIGITS).write(inputGpx, outputFile);
         }
 
 
@@ -89,6 +95,12 @@ public class MainCli {
         Option dOption = new Option("d", "date", true, "Change the date in yyyy-mm-dd format");
         dOption.setArgName("date");
         options.addOption(dOption);
+        Option latOption = new Option("lat", "latitude", true, "Change the latitude by adding <lat> to all waypoints");
+        latOption.setArgName("lat");
+        options.addOption(latOption);
+        Option lonOption = new Option("lon", "longitude", true, "Change the longitude by adding <lon> to all waypoints");
+        lonOption.setArgName("lon");
+        options.addOption(lonOption);
         Option oOption = new Option("o", "output", true, "Set output file");
         oOption.setArgName("file");
         options.addOption(oOption);
