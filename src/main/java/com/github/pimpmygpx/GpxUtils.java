@@ -97,6 +97,29 @@ public class GpxUtils {
             .build();
     }
 
+    public static GPX removeElevations(GPX gpx) {
+        boolean allElevationsEqualZero = gpx.tracks()
+                .flatMap(Track::segments)
+                .flatMap(TrackSegment::points)
+                .map(WayPoint::getElevation)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .allMatch(ele -> ele.intValue() == 0);
+
+        // Si tous les éléments sont égals à zéro
+        if(allElevationsEqualZero) {
+            GPX rGPX =  gpx.toBuilder()
+                    .wayPointFilter()
+                    .map(wp -> wp.toBuilder()
+                            .ele((Length)null)
+                            .build())
+                    .build()
+                    .build();
+            return rGPX;
+        }else{
+            return gpx;
+        }
+    }
 
 
 
