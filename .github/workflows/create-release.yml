@@ -1,8 +1,12 @@
-name: Create release
+name: Create executables
 on: [push]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Create executables on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
     steps:
       - uses: actions/checkout@v4
       - uses: graalvm/setup-graalvm@v1
@@ -18,8 +22,8 @@ jobs:
           native-image --version
       - name: Example step using Maven plugin  # https://graalvm.github.io/native-build-tools/latest/maven-plugin.html
         run: mvn -Pnative package
-      - run: mkdir staging && cp target/pmgpx.jar staging && cp target/pmgpx staging
+      - run: mkdir staging && cp target/pmgpx* staging
       - uses: actions/upload-artifact@v3
         with:
-         name: Package
+         name: PimpMyGPX-${{ matrix.os }}
          path: staging
