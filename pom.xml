@@ -12,6 +12,8 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mainClass>com.github.pimpmygpx.MainCli</mainClass>
+        <cliName>pmgpx</cliName>
     </properties>
 
     <dependencies>
@@ -35,6 +37,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -45,13 +48,13 @@
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>
-                                    <mainClass>com.github.pimpmygpx.MainCli</mainClass>
+                                    <mainClass>${mainClass}</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>pimpmygpx</finalName>
+                            <finalName>${cliName}</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>
@@ -68,18 +71,26 @@
                     <plugin>
                         <groupId>org.graalvm.buildtools</groupId>
                         <artifactId>native-maven-plugin</artifactId>
+                        <version>0.9.28</version>
                         <extensions>true</extensions>
                         <executions>
                             <execution>
                                 <id>build-native</id>
                                 <goals>
-                                    <goal>build</goal>
+                                    <goal>compile-no-fork</goal>
                                 </goals>
                                 <phase>package</phase>
                             </execution>
                         </executions>
                         <configuration>
                             <fallback>false</fallback>
+                            <imageName>${cliName}</imageName>
+                            <mainClass>com.github.pimpmygpx.MainCli</mainClass>
+                            <classpath>
+                                <param>
+                                    ${project.build.directory}/${cliName}.jar
+                                </param>
+                            </classpath>
                         </configuration>
                     </plugin>
                 </plugins>
