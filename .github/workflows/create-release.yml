@@ -21,7 +21,7 @@ jobs:
           java --version
           native-image --version
       - name: Example step using Maven plugin  # https://graalvm.github.io/native-build-tools/latest/maven-plugin.html
-        run: mvn -Pnative package
+        run: mvn --batch-mode -Pnative package
       - run: mkdir staging && cp target/pmgpx* staging
       - uses: actions/upload-artifact@v3
         with:
