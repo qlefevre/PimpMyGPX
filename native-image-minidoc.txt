@@ -1,0 +1,9 @@
+
+native-image -jar ~/pimpmygpx/target/pimpmygpx.jar --no-fallback -o ~/pimpmygpx/target/pimpmygpx
+
+set env variable /etc/environment
+PATH="/opt/graalvm-jdk-17.0.9+11.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+JAVA_HOME=/opt/graalvm-jdk-17.0.9+11.1
+GRAALVM_HOME=/opt/graalvm-jdk-17.0.9+11.1
+
+https://blogs.oracle.com/developers/post/building-cross-platform-native-images-with-graalvm
