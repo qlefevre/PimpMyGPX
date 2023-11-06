@@ -3,7 +3,7 @@
 # PimpMyGPX
 
 Afficher l'aide
-```
+```dos
 pmgpx --help
 ```
 L'aide suivante apparaîtra
@@ -23,20 +23,12 @@ Please report issues at https://github.com/qlefevre/PimpMyGPX
 ```
 
 Modifier l'heure de début de la course
-```
+```dos
 pmgpx --start-time hh:mm
 ```
-Dans cet exemple, la course commence à 9h50 (Paris GMT+2).
-```xml
- <trkpt lat="50.4737550" lon="3.3012980">
-    <time>2023-10-15T07:50:39Z</time>
-```
+Dans cet exemple, la course commence à 9h50 (Paris GMT+2). ```xml <time>2023-10-15T07:50:39Z</time>```
 Pour changer l'heure de début à 10h50, on tape cette commande :
-```
+```dos
 pmgpx --start-time 10:50
 ```
-On obtient le résultat suivant 
-```xml
- <trkpt lat="50.4737550" lon="3.3012980">
-    <time>2023-10-15T08:50:39Z</time>
-```
+On obtient le résultat suivant ```xml <time>2023-10-15T08:50:39Z</time>```
