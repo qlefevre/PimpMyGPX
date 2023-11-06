@@ -11,33 +11,12 @@ Le programme se nomme :
 - pmgpx sous macos et linux
 
 Les optiosn sont :
-- [`--start-time` - Modifier l'heure de début de la course](#--start-time---modifier-l-heure-de-d-but-de-la-course)
+- [`--start-time` - Modifier l'heure de début de la course](#--start-time---modifier-lheure-de-début-de-la-course)
 - [`--finish-time` - Modifier l'heure de fin de la course](#--finish-time---modifier-lheure-de-fin-de-la-course)
 - [`--date` - Modifier la date de la course](#--date---modifier-la-date-de-la-course)
 - [`--latitude` - Modifier l'heure de fin de la course](#--latitude---modifier-la-latitude-de-la-course)
 - [`--longitude` - Modifier la date de la course](#--longitude---modifier-la-longitude-de-la-course)
-- [`--help` - Afficher l'aide](#--help---afficher-l-aide)
-
-### `--help` - Afficher l'aide
-
-```console
-pmgpx --help
-```
-L'aide suivante apparaîtra
-```console
-C:\Users\Forrest Gump\Downloads>pmgpx
-PimpMyGPX 1.0
-usage: pmgpx [OPTION]... [FILE]
-Do something useful with a GPX file
- -s,--start-time <hour>    Change start time in hh:mm or hh:mm:ss format
- -f,--finish-time <hour>   Change finish time in hh:mm or hh:mm:ss format
- -d,--date <date>          Change the date in yyyy-mm-dd format
- -lat,--latitude <lat>     Change the latitude by adding <lat> to all waypoints
- -lon,--longitude <lon>    Change the longitude by adding <lon> to all waypoints
- -o,--output <file>        Set output file
- -h,--help                 Display help
-Please report issues at https://github.com/qlefevre/PimpMyGPX
-```
+- [`--help` - Afficher l'aide](#--help---afficher-laide)
 
 ### `--start-time` - Modifier l'heure de début de la course
 ```console
@@ -91,3 +70,24 @@ pmgpx --longitude 0.00078 course_strava.gpx
 ```
 On obtient le résultat suivant :
 ![Résultat longitude](/doc/longitude.png)
+
+### `--help` - Afficher l'aide
+
+```console
+pmgpx --help
+```
+L'aide suivante apparaîtra
+```console
+C:\Users\Forrest Gump\Downloads>pmgpx
+PimpMyGPX 1.0
+usage: pmgpx [OPTION]... [FILE]
+Do something useful with a GPX file
+ -s,--start-time <hour>    Change start time in hh:mm or hh:mm:ss format
+ -f,--finish-time <hour>   Change finish time in hh:mm or hh:mm:ss format
+ -d,--date <date>          Change the date in yyyy-mm-dd format
+ -lat,--latitude <lat>     Change the latitude by adding <lat> to all waypoints
+ -lon,--longitude <lon>    Change the longitude by adding <lon> to all waypoints
+ -o,--output <file>        Set output file
+ -h,--help                 Display help
+Please report issues at https://github.com/qlefevre/PimpMyGPX
+```
