@@ -39,53 +39,53 @@ Please report issues at https://github.com/qlefevre/PimpMyGPX
 
 ### `--start-time` - Modifier l'heure de début de la course
 ```console
-pmgpx --start-time hh:mm
+pmgpx --start-time hh:mm [FILE]
 ```
 Dans cet exemple, la course commence à 9h50 (Paris GMT+2) : `<time>2023-10-15T07:50:39Z</time>`  
 Pour changer l'heure de début à 10h50, on tape cette commande :
 ```
-pmgpx --start-time 10:50
+pmgpx --start-time 10:50 course_strava.gpx
 ```
 On obtient le résultat suivant : `<time>2023-10-15T08:50:39Z</time>`
 
 ### `--finish-time` - Modifier l'heure de fin de la course
 ```console
-pmgpx --finish-time hh:mm
+pmgpx --finish-time hh:mm [FILE]
 ```
 Dans cet exemple, la course commence à 10h18 (Paris GMT+2) : `<time>2023-10-15T08:18:40Z</time>`  
 Pour changer l'heure de fin à 10h30, on tape cette commande :
 ```console
-pmgpx --finish-time 10:30
+pmgpx --finish-time 10:30 course_strava.gpx
 ```
 On obtient le résultat suivant : `<time>2023-10-15T08:30:40Z</time>`
 
 ### `--date` - Modifier la date de la course
 ```console
-pmgpx --date yyyy-mm-dd
+pmgpx --date yyyy-mm-dd [FILE]
 ```
 Dans cet exemple, la course se déroule le 15/10/2023 : `<time>2023-10-15T08:18:40Z</time>`  
 Pour changer la date, on tape cette commande :
 ```console
-pmgpx --date 2023-07-14
+pmgpx --date 2023-07-14 course_strava.gpx
 ```
 On obtient le résultat suivant : `<time>2023-07-14T08:30:40Z</time>`
 
 ### `--latitude` - Modifier la latitude de la course
 ```console
-pmgpx --latitude <lat>
+pmgpx --latitude <lat> [FILE]
 ```
 Dans cet exemple, le gps est mal calibré. On décale le tracé de 0.0011 points sur la latitude.
 ```console
-pmgpx --latitude 0.0011
+pmgpx --latitude 0.0011 course_strava.gpx
 ```
 
 ### `--longitude` - Modifier la longitude de la course
 ```console
-pmgpx --longitude <lon>
+pmgpx --longitude <lon> [FILE]
 ```
 Dans cet exemple, le gps est mal calibré. On décale le tracé de 0.0022 points sur la longitude.
 ```console
-pmgpx --longitude 0.0022
+pmgpx --longitude 0.00078 course_strava.gpx
 ```
 On obtient le résultat suivant :
-![Résultat latitude](/doc/longitude.png)
+![Résultat longitude](/doc/longitude.png)
