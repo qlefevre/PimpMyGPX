@@ -3,7 +3,7 @@
 # PimpMyGPX
 
 Afficher l'aide
-```dos
+```
 pmgpx --help
 ```
 L'aide suivante apparaîtra
@@ -23,12 +23,34 @@ Please report issues at https://github.com/qlefevre/PimpMyGPX
 ```
 
 Modifier l'heure de début de la course
-```dos
+```
 pmgpx --start-time hh:mm
 ```
-Dans cet exemple, la course commence à 9h50 (Paris GMT+2). ```xml <time>2023-10-15T07:50:39Z</time>```
+Dans cet exemple, la course commence à 9h50 (Paris GMT+2) : `<time>2023-10-15T07:50:39Z</time>`  
 Pour changer l'heure de début à 10h50, on tape cette commande :
-```dos
+```
 pmgpx --start-time 10:50
 ```
-On obtient le résultat suivant ```xml <time>2023-10-15T08:50:39Z</time>```
+On obtient le résultat suivant : `<time>2023-10-15T08:50:39Z</time>`
+
+Modifier l'heure de fin de la course
+```
+pmgpx --finish-time hh:mm
+```
+Dans cet exemple, la course commence à 10h18 (Paris GMT+2) : `<time>2023-10-15T08:18:40Z</time>`  
+Pour changer l'heure de fin à 10h30, on tape cette commande :
+```
+pmgpx --finish-time 10:30
+```
+On obtient le résultat suivant : `<time>2023-10-15T08:30:40Z</time>`
+
+Modifier la date de la course
+```
+pmgpx --date yyyy-mm-dd format
+```
+Dans cet exemple, la course se déroule le 15/10/2023 : `<time>2023-10-15T08:18:40Z</time>`  
+Pour changer la date, on tape cette commande :
+```
+pmgpx --finish-time 2023-07-14
+```
+On obtient le résultat suivant : `<time>2023-07-14T08:30:40Z</time>`
