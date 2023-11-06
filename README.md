@@ -61,11 +61,22 @@ On obtient le résultat suivant : `<time>2023-10-15T08:30:40Z</time>`
 
 ### `--date` - Modifier la date de la course
 ```console
-pmgpx --date yyyy-mm-dd format
+pmgpx --date yyyy-mm-dd
 ```
 Dans cet exemple, la course se déroule le 15/10/2023 : `<time>2023-10-15T08:18:40Z</time>`  
 Pour changer la date, on tape cette commande :
 ```console
-pmgpx --finish-time 2023-07-14
+pmgpx --date 2023-07-14
 ```
 On obtient le résultat suivant : `<time>2023-07-14T08:30:40Z</time>`
+
+### `--latitude` - Modifier la latitude de la course
+```console
+pmgpx --latitude <lat>
+```
+Dans cet exemple, le gps est mal calibré. On décale le tracé de 0.0022 points sur la latitude.
+```console
+pmgpx --latitude 0.0022
+```
+On obtient le résultat suivant :
+![Résultat latitude](/doc/latitude.png)
