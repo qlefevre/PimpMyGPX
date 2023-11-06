@@ -11,11 +11,10 @@ Le programme se nomme :
 - pmgpx sous macos et linux
 
 Les optiosn sont :
-- [`--help` - Afficher l'aide](#---help----afficher-l-aide)
-- [`--start-time` - Modifier l'heure de début de la course](#---start-time----modifier-l-heure-de-d-but-de-la-course)
-- [`--finish-time` - Modifier l'heure de fin de la course](#---finish-time----modifier-l-heure-de-fin-de-la-course)
-- [`--date` - Modifier la date de la course](#---date----modifier-la-date-de-la-course)
-- [test](#---date----modifier-la-date-de-la-course)
+- [`--help` - Afficher l'aide](#----help-----afficher-l-aide)
+- [`--start-time` - Modifier l'heure de début de la course](#----start-time-----modifier-l-heure-de-d-but-de-la-course)
+- [`--finish-time` - Modifier l'heure de fin de la course](#----finish-time-----modifier-l-heure-de-fin-de-la-course)
+- [`--date` - Modifier la date de la course](#----date-----modifier-la-date-de-la-course)
 
 ### `--help` - Afficher l'aide
 
