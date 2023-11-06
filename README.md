@@ -7,8 +7,9 @@
 Le nom de la commande `pmgpx`.
 
 Le programme se nomme :
-- pmgpx.exe sous windows
-- pmgpx sous macos et linux
+- `pmgpx.exe` sous windows
+- `pmgpx` sous macos et linux
+- `java -jar pmgpx.jar` sur une JVM sous windows, macos ou linux
 
 Les optiosn sont :
 - [`--start-time` - Modifier l'heure de début de la course](#--start-time---modifier-lheure-de-début-de-la-course)
