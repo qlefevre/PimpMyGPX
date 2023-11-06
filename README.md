@@ -2,7 +2,12 @@
 
 # PimpMyGPX
 
-
+Afficher l'aide
+```
+pmgpx --help
+```
+L'aide suivante apparaîtra
+```
 C:\Users\Forrest Gump\Downloads>pmgpx
 PimpMyGPX 1.0
 usage: pmgpx [OPTION]... [FILE]
@@ -15,3 +20,23 @@ Do something useful with a GPX file
  -o,--output <file>        Set output file
  -h,--help                 Display help
 Please report issues at https://github.com/qlefevre/PimpMyGPX
+```
+
+Modifier l'heure de début de la course
+```
+pmgpx --start-time hh:mm
+```
+Dans cet exemple, la course commence à 9h50 (Paris GMT+2).
+```
+ <trkpt lat="50.4737550" lon="3.3012980">
+    <time>2023-10-15T07:50:39Z</time>
+```
+Pour changer l'heure de début à 10h50, on tape cette commande :
+```
+pmgpx --start-time 10:50
+```
+On obtient le résultat suivant 
+```
+ <trkpt lat="50.4737550" lon="3.3012980">
+    <time>2023-10-15T08:50:39Z</time>
+```
