@@ -2,7 +2,7 @@
 
 # PimpMyGPX
 
-Afficher l'aide
+### `--help` - Afficher l'aide
 ```
 pmgpx --help
 ```
@@ -22,7 +22,7 @@ Do something useful with a GPX file
 Please report issues at https://github.com/qlefevre/PimpMyGPX
 ```
 
-Modifier l'heure de début de la course
+### `--start-time` - Modifier l'heure de début de la course
 ```
 pmgpx --start-time hh:mm
 ```
@@ -33,7 +33,7 @@ pmgpx --start-time 10:50
 ```
 On obtient le résultat suivant : `<time>2023-10-15T08:50:39Z</time>`
 
-Modifier l'heure de fin de la course
+### `--finish-time` - Modifier l'heure de fin de la course
 ```
 pmgpx --finish-time hh:mm
 ```
@@ -44,7 +44,7 @@ pmgpx --finish-time 10:30
 ```
 On obtient le résultat suivant : `<time>2023-10-15T08:30:40Z</time>`
 
-Modifier la date de la course
+### `--date` - Modifier la date de la course
 ```
 pmgpx --date yyyy-mm-dd format
 ```
