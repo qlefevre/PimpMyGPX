@@ -11,10 +11,12 @@ Le programme se nomme :
 - pmgpx sous macos et linux
 
 Les optiosn sont :
-- [`--help` - Afficher l'aide](#--help---afficher-l-aide)
 - [`--start-time` - Modifier l'heure de début de la course](#--start-time---modifier-l-heure-de-d-but-de-la-course)
 - [`--finish-time` - Modifier l'heure de fin de la course](#--finish-time---modifier-lheure-de-fin-de-la-course)
 - [`--date` - Modifier la date de la course](#--date---modifier-la-date-de-la-course)
+- [`--latitude` - Modifier l'heure de fin de la course](#--latitude---modifier-la-latitude-de-la-course)
+- [`--longitude` - Modifier la date de la course](#--longitude---modifier-la-longitude-de-la-course)
+- [`--help` - Afficher l'aide](#--help---afficher-l-aide)
 
 ### `--help` - Afficher l'aide
 
@@ -22,7 +24,7 @@ Les optiosn sont :
 pmgpx --help
 ```
 L'aide suivante apparaîtra
-```
+```console
 C:\Users\Forrest Gump\Downloads>pmgpx
 PimpMyGPX 1.0
 usage: pmgpx [OPTION]... [FILE]
@@ -43,7 +45,7 @@ pmgpx --start-time hh:mm [FILE]
 ```
 Dans cet exemple, la course commence à 9h50 (Paris GMT+2) : `<time>2023-10-15T07:50:39Z</time>`  
 Pour changer l'heure de début à 10h50, on tape cette commande :
-```
+```console
 pmgpx --start-time 10:50 course_strava.gpx
 ```
 On obtient le résultat suivant : `<time>2023-10-15T08:50:39Z</time>`
