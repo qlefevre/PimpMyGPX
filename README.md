@@ -74,9 +74,9 @@ On obtient le résultat suivant : `<time>2023-07-14T08:30:40Z</time>`
 ```console
 pmgpx --latitude <lat>
 ```
-Dans cet exemple, le gps est mal calibré. On décale le tracé de 0.0022 points sur la latitude.
+Dans cet exemple, le gps est mal calibré. On décale le tracé de 0.0011 points sur la latitude.
 ```console
-pmgpx --latitude 0.0022
+pmgpx --latitude 0.0011
 ```
 
 ### `--longitude` - Modifier la longitude de la course
