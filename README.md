@@ -78,5 +78,14 @@ Dans cet exemple, le gps est mal calibré. On décale le tracé de 0.0022 points
 ```console
 pmgpx --latitude 0.0022
 ```
+
+### `--longitude` - Modifier la longitude de la course
+```console
+pmgpx --longitude <lon>
+```
+Dans cet exemple, le gps est mal calibré. On décale le tracé de 0.0022 points sur la longitude.
+```console
+pmgpx --longitude 0.0022
+```
 On obtient le résultat suivant :
-![Résultat latitude](/doc/latitude.png)
+![Résultat latitude](/doc/longitude.png)
