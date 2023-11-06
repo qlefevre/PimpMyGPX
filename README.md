@@ -2,9 +2,9 @@
 
 # PimpMyGPX
 
-## Utilisation en ligne de commande
+## Interface en ligne de commande
 
-En ligne de commande le nom du programme est `pmgpx`.
+Le nom de la commande `pmgpx`.
 
 ### `--help` - Afficher l'aide
 ```console
