@@ -8,8 +8,6 @@ import org.apache.commons.cli.*;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoField;
-import java.util.Arrays;
 import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
 
@@ -77,7 +75,16 @@ public class MainCli {
             }
 
             // Output file
-            Path outputFile = Paths.get(inputFile.toString().replace(".gpx",".out.gpx"));
+            Path outputFile;
+            if(cmd.hasOption("output")){
+                outputFile = Paths.get(cmd.getOptionValue("output"));
+                // Si le chemin n'est pas absolu
+                if(!outputFile.isAbsolute()){
+                    outputFile = inputFile.getParent().resolve(outputFile);
+                }
+            }else {
+                outputFile =Paths.get(inputFile.toString().replace(".gpx", ".out.gpx"));
+            }
             Writer.of(DEFAULT_INDENT,DEFAULT_FRACTION_DIGITS).write(inputGpx, outputFile);
         }
 
