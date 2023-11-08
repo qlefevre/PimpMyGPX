@@ -4,3 +4,13 @@ changer vitesse avec coef
 changer date
 décaler les points gauche droite bas haut
 fusionner strava + montre heartrate gpx
+
+revoir sortie xml gpx et schema
+ajouter une option --info
+ajouter junit
+ajouter gz
+-ajouter hr-rate
+-ajouter hr-file
+-impression doc
+-merge données manquante gps + hr
+-merge précision gps
