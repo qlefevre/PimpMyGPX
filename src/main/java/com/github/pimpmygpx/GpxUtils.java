@@ -72,6 +72,12 @@ public class GpxUtils {
         return rGPX;
     }
 
+    public static String info(GPX gpx) {
+        Instant currentStartTimeInstant = streamWayPoint(gpx, WayPoint::getTime).min(Instant::compareTo).get();
+        Instant currentFinishTimeInstant = streamWayPoint(gpx, WayPoint::getTime).max(Instant::compareTo).get();
+        return "Heure de début: %s      Heure de fin: %s".formatted(currentStartTimeInstant,currentFinishTimeInstant);
+    }
+
     private static int deltaMinutes(Instant totem, LocalTime localTime){
         int hours = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
         int minutes = localTime.get(ChronoField.MINUTE_OF_HOUR);
