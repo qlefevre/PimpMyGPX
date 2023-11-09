@@ -1,5 +1,6 @@
 package com.github.pimpmygpx;
 
+import com.github.pimpmygpx.cli.CustomHelpFormatter;
 import io.jenetics.jpx.GPX;
 import io.jenetics.jpx.GPX.Writer;
 import io.jenetics.jpx.GPX.Writer.Indent;
@@ -31,9 +32,10 @@ public class MainCli {
             String footer = "Please report issues at https://github.com/qlefevre/PimpMyGPX";
 
             System.out.println("PimpMyGPX 1.0 ");
-            HelpFormatter formatter = new HelpFormatter();
+            HelpFormatter formatter = new CustomHelpFormatter();
             formatter.setOptionComparator((o1, o2) -> 0);
             formatter.setWidth(90);
+            formatter.setDescPadding(4);
             formatter.printHelp("pmgpx [OPTION]... [FILE]", header, options, footer);
         }else
         // A-t-ton bien un seul argument de fichier
