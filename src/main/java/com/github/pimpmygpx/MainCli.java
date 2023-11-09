@@ -74,6 +74,9 @@ public class MainCli {
                 inputGpx = GpxUtils.moveWayPoints(inputGpx,lat,lon);
             }
 
+            // Mise à jour du temps
+            inputGpx = GpxUtils.updateMetadata(inputGpx);
+
             // Output file
             Path outputFile;
             if(cmd.hasOption("output")){
