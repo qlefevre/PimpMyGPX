@@ -74,6 +74,11 @@ public class MainCli {
                 inputGpx = GpxUtils.moveWayPoints(inputGpx,lat,lon);
             }
 
+            // info
+            if (cmd.hasOption("info")){
+                System.out.println(GpxUtils.info(inputGpx));
+            }
+
             // Mise à jour du temps
             inputGpx = GpxUtils.updateMetadata(inputGpx);
 
@@ -115,6 +120,7 @@ public class MainCli {
         Option oOption = new Option("o", "output", true, "Set output file");
         oOption.setArgName("file");
         options.addOption(oOption);
+        options.addOption("i","info",false,"Display info about the given GPX");
         options.addOption("h","help",false,"Display help");
 
         return options;
