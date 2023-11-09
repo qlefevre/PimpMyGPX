@@ -19431,5 +19431,33 @@ xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpx
      </gpxtpx:TrackPointExtension>
     </extensions>
    </trkpt>
-</trkseg></trk>
+<trkpt lat="50.532447814941406" lon="2.800920009613037">
+    <ele>0</ele>
+    <time>2023-10-27T19:27:56Z</time>
+    <extensions>
+     <gpxtpx:TrackPointExtension>
+      <gpxtpx:hr>171</gpxtpx:hr>
+     </gpxtpx:TrackPointExtension>
+    </extensions>
+   </trkpt>
+<trkpt lat="50.532447814941406" lon="2.800920009613037">
+    <ele>0</ele>
+    <time>2023-10-27T19:27:57Z</time>
+    <extensions>
+     <gpxtpx:TrackPointExtension>
+      <gpxtpx:hr>171</gpxtpx:hr>
+     </gpxtpx:TrackPointExtension>
+    </extensions>
+   </trkpt>
+<trkpt lat="50.532447814941406" lon="2.800920009613037">
+    <ele>0</ele>
+    <time>2023-10-27T19:27:58Z</time>
+    <extensions>
+     <gpxtpx:TrackPointExtension>
+      <gpxtpx:hr>171</gpxtpx:hr>
+     </gpxtpx:TrackPointExtension>
+    </extensions>
+   </trkpt>
+</trkseg>
+</trk>
 </gpx>
