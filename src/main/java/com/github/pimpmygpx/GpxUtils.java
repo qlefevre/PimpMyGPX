@@ -3,8 +3,11 @@ package com.github.pimpmygpx;
 import io.jenetics.jpx.*;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -73,9 +76,18 @@ public class GpxUtils {
     }
 
     public static String info(GPX gpx) {
-        Instant currentStartTimeInstant = streamWayPoint(gpx, WayPoint::getTime).min(Instant::compareTo).get();
-        Instant currentFinishTimeInstant = streamWayPoint(gpx, WayPoint::getTime).max(Instant::compareTo).get();
-        return "Heure de début: %s      Heure de fin: %s".formatted(currentStartTimeInstant,currentFinishTimeInstant);
+        StringBuilder result = new StringBuilder();
+        Instant startinstant = streamWayPoint(gpx, WayPoint::getTime).min(Instant::compareTo).get();
+        Instant finishInstant = streamWayPoint(gpx, WayPoint::getTime).max(Instant::compareTo).get();
+        LocalDateTime dateLdt = LocalDateTime.ofInstant(startinstant, ZoneId.systemDefault());
+        DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        Duration duration = Duration.between(startinstant, finishInstant);
+        result.append("Date: %s              Durée: %s:%s\n".formatted(dtf.format(dateLdt),duration.toHoursPart(),duration.toMinutesPart()));
+        LocalTime startLdt = LocalTime.ofInstant(startinstant, ZoneId.systemDefault());
+        LocalTime finishLdt = LocalTime.ofInstant(finishInstant, ZoneId.systemDefault());
+        result.append("Heure de début: %s      Heure de fin: %s".formatted(startLdt,finishLdt));
+        // float allure = duration.toSeconds()/distance;
+        return result.toString();
     }
 
     private static int deltaMinutes(Instant totem, LocalTime localTime){
