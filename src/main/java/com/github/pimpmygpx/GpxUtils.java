@@ -58,6 +58,20 @@ public class GpxUtils {
         }
     }
 
+    public static GPX updateMetadata(GPX gpx){
+        // Mets à jour le temps au niveau des metadata
+        Instant first = streamWayPoint(gpx,WayPoint::getTime).findFirst().get();
+        Metadata metadata;
+        if(gpx.getMetadata().isPresent()){
+            metadata = gpx.getMetadata().get();
+        }else{
+            metadata = Metadata.builder().build();
+        }
+        metadata = metadata.toBuilder().time(first).build();
+        GPX rGPX = gpx.toBuilder().metadata(metadata).build();
+        return rGPX;
+    }
+
     private static int deltaMinutes(Instant totem, LocalTime localTime){
         int hours = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
         int minutes = localTime.get(ChronoField.MINUTE_OF_HOUR);
