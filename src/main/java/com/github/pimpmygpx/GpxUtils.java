@@ -1,6 +1,7 @@
 package com.github.pimpmygpx;
 
 import io.jenetics.jpx.*;
+import io.jenetics.jpx.geom.Geoid;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +14,8 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.lang.Math.rint;
 
 public class GpxUtils {
 
@@ -62,32 +65,54 @@ public class GpxUtils {
     }
 
     public static GPX updateMetadata(GPX gpx){
+        GPX rGPX = gpx;
         // Mets à jour le temps au niveau des metadata
-        Instant first = streamWayPoint(gpx,WayPoint::getTime).findFirst().get();
-        Metadata metadata;
-        if(gpx.getMetadata().isPresent()){
-            metadata = gpx.getMetadata().get();
-        }else{
-            metadata = Metadata.builder().build();
+        Optional<Instant> first = streamWayPoint(gpx,WayPoint::getTime).findFirst();
+        if(first.isPresent()) {
+            Metadata metadata;
+            if (gpx.getMetadata().isPresent()) {
+                metadata = gpx.getMetadata().get();
+            } else {
+                metadata = Metadata.builder().build();
+            }
+            metadata = metadata.toBuilder().time(first.get()).build();
+            rGPX = gpx.toBuilder().metadata(metadata).build();
         }
-        metadata = metadata.toBuilder().time(first).build();
-        GPX rGPX = gpx.toBuilder().metadata(metadata).build();
         return rGPX;
     }
 
     public static String info(GPX gpx) {
         StringBuilder result = new StringBuilder();
-        Instant startinstant = streamWayPoint(gpx, WayPoint::getTime).min(Instant::compareTo).get();
-        Instant finishInstant = streamWayPoint(gpx, WayPoint::getTime).max(Instant::compareTo).get();
-        LocalDateTime dateLdt = LocalDateTime.ofInstant(startinstant, ZoneId.systemDefault());
-        DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        Duration duration = Duration.between(startinstant, finishInstant);
-        result.append("Date: %s              Durée: %s:%s\n".formatted(dtf.format(dateLdt),duration.toHoursPart(),duration.toMinutesPart()));
-        LocalTime startLdt = LocalTime.ofInstant(startinstant, ZoneId.systemDefault());
-        LocalTime finishLdt = LocalTime.ofInstant(finishInstant, ZoneId.systemDefault());
-        result.append("Heure de début: %s      Heure de fin: %s".formatted(startLdt,finishLdt));
-        // float allure = duration.toSeconds()/distance;
+        Optional<Instant> startinstant = streamWayPoint(gpx, WayPoint::getTime).min(Instant::compareTo);
+        Optional<Instant> finishInstant = streamWayPoint(gpx, WayPoint::getTime).max(Instant::compareTo);
+        Duration duration = null;
+        if(startinstant.isPresent() && finishInstant.isPresent()) {
+            LocalDateTime dateLdt = LocalDateTime.ofInstant(startinstant.get(), ZoneId.systemDefault());
+            DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+            duration = Duration.between(startinstant.get(), finishInstant.get());
+            result.append("Date: %s\t\t\tDurée: %s:%s\n".formatted(dtf.format(dateLdt), duration.toHoursPart(), duration.toMinutesPart()));
+            LocalTime startLdt = LocalTime.ofInstant(startinstant.get(), ZoneId.systemDefault());
+            LocalTime finishLdt = LocalTime.ofInstant(finishInstant.get(), ZoneId.systemDefault());
+            result.append("Heure de début: %s\tHeure de fin: %s\n".formatted(startLdt, finishLdt));
+        }
+        double kilometers = GpxUtils.length(gpx);
+        result.append("Distance: %.2f km".formatted(kilometers));
+        if(duration != null) {
+            double allure = rint(duration.toSeconds() / kilometers);
+            result.append("\t\t\tAllure: %d:%02.0f /km".formatted((int) allure / 60, allure % 60));
+        }
         return result.toString();
+    }
+
+    public static Double length(GPX gpx) {
+        return gpx.tracks()
+                .mapToDouble(track1 ->
+                        track1.segments().map(segment1 ->
+                                segment1.points().collect(Geoid.WGS84.toPathLength()))
+                                .mapToDouble(length1 -> length1.to(
+                                Length.Unit.KILOMETER
+                        )).sum())
+                .sum();
     }
 
     private static int deltaMinutes(Instant totem, LocalTime localTime){
