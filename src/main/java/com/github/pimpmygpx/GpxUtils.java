@@ -95,9 +95,11 @@ public class GpxUtils {
             LocalTime finishLdt = LocalTime.ofInstant(finishInstant.get(), ZoneId.systemDefault());
             result.append("Heure de début: %s\tHeure de fin: %s\n".formatted(startLdt, finishLdt));
         }
+        // distance réel déplacement sur strava => duréé réel déplacement
         double kilometers = GpxUtils.length(gpx);
         result.append("Distance: %.2f km".formatted(kilometers));
         if(duration != null) {
+            // allure moyenne par km sur strava
             double allure = rint(duration.toSeconds() / kilometers);
             result.append("\t\t\tAllure: %d:%02.0f /km".formatted((int) allure / 60, allure % 60));
         }
