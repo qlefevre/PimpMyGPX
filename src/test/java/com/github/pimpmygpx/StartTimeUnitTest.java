@@ -34,9 +34,9 @@ public class StartTimeUnitTest {
 
             // Tests
             assertEquals("2023-10-15T10:12:39Z", gpx.getMetadata().get().getTime().get().toString(),
-                    "Metadata - L'heure de début n'est pas 12h12m39s.");
+                    "Metadata - L'heure de début n'est pas correcte.");
             assertEquals("2023-10-15T10:12:39Z", gpx.getTracks().get(0).getSegments().get(0).getPoints().get(0).getTime().get().toString(),
-                    "Metadata - L'heure de début n'est pas 12h12m39s.");
+                    "Metadata - L'heure de début n'est pas correcte.");
         }
     }
 
