@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  *  Junit pour tester l'option --info : afficher les infos d'un gpx
  */
-public class InfoUnitTest {
+public class InfoUnitTest extends AbstractUnitTest {
 
     public static final String FILE = "/La_Landasienne_2023_5Km_20231015.gpx";
 
@@ -23,9 +23,7 @@ public class InfoUnitTest {
 
     @Test
     public void testOptionInfo() throws IOException {
-
-        try(InputStream is = getClass().getResourceAsStream(FILE)) {
-            GPX gpx = GPX.Reader.DEFAULT.read(is);
+        testGpx(GPX_LANDASIENNE, gpx -> {
 
             // start time 2023-10-15T07:50:39Z fichier 9h50 (GMT+2)
 
@@ -33,7 +31,7 @@ public class InfoUnitTest {
             String info = GpxUtils.info(gpx);
 
             assertEquals(EXPECTED_INFO, info,"Le message d'info n'est pas correct.");
-        }
+        });
     }
 
 }
