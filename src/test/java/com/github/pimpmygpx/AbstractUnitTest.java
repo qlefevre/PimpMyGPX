@@ -19,10 +19,4 @@ public class AbstractUnitTest {
            function.accept(gpx);
         }
     }
-
-    @BeforeAll
-    public static void setDefaultTimeZone() {
-        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
-    }
-
 }

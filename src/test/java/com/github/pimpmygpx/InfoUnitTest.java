@@ -17,7 +17,7 @@ public class InfoUnitTest extends AbstractUnitTest {
 
     public static final String FILE = "/La_Landasienne_2023_5Km_20231015.gpx";
 
-    private static final String EXPECTED_INFO = "Date: 15/10/2023\t\t\tDurée: 0:28\n" +
+    private static final String EXPECTED_INFO = "Date: 2023-11-05\t\t\tDurée: 0:28\n" +
             "Heure de début: 09:50:39\tHeure de fin: 10:18:40\n" +
             "Distance: 4,81 km\t\t\tAllure: 5:49 /km";
 

@@ -88,7 +88,7 @@ public class GpxUtils {
         Duration duration = null;
         if(startinstant.isPresent() && finishInstant.isPresent()) {
             LocalDateTime dateLdt = LocalDateTime.ofInstant(startinstant.get(), ZoneId.systemDefault());
-            DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+            DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE;
             duration = Duration.between(startinstant.get(), finishInstant.get());
             result.append("Date: %s\t\t\tDurée: %s:%s\n".formatted(dtf.format(dateLdt), duration.toHoursPart(), duration.toMinutesPart()));
             LocalTime startLdt = LocalTime.ofInstant(startinstant.get(), ZoneId.systemDefault());
