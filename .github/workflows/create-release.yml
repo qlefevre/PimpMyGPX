@@ -8,6 +8,11 @@ jobs:
       matrix:
         os: [ macos-latest, windows-latest, ubuntu-latest ]
     steps:
+      - uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "Europe/Paris"
+          timezoneMacos: "Europe/Paris"
+          timezoneWindows: "Romance Standard Time"
       - uses: actions/checkout@v4
       - uses: graalvm/setup-graalvm@v1
         with:
