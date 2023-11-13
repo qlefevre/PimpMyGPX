@@ -34,7 +34,7 @@ public class FinishTimeUnitTest {
             // Tests;
             List<WayPoint> points = gpx.getTracks().get(0).getSegments().get(0).getPoints();
             assertEquals("2023-10-15T13:15:40Z", points.get(points.size()-1).getTime().get().toString(),
-                    "Metadata - L'heure de début n'est pas 12h12m39s.");
+                    "Metadata - L'heure de fin n'est pas correcte.");
         }
     }
 
