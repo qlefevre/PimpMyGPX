@@ -97,7 +97,7 @@ public class GpxUtils {
         }
         // distance réel déplacement sur strava => duréé réel déplacement
         double kilometers = GpxUtils.length(gpx);
-        result.append("Distance: %.2f km".formatted(kilometers));
+        result.append("Distance: %.2f km".formatted(kilometers).replace(',','.'));
         if(duration != null) {
             // allure moyenne par km sur strava
             double allure = rint(duration.toSeconds() / kilometers);
