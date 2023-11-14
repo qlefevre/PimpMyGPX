@@ -1,8 +1,8 @@
-name: Create executables
+name: CD - Build executable files
 on: [push]
 jobs:
   build:
-    name: Create executables on ${{ matrix.os }}
+    name: CD - Build an executable file on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
