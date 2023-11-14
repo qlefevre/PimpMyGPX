@@ -36,4 +36,17 @@ public class FinishTimeUnitTest extends AbstractUnitTest{
         });
     }
 
+    @Test
+    public void testMainOptionFinishTime() throws Exception {
+        testMain(GPX_LANDASIENNE, new String[]{"-f", "15:15"}, gpx -> {
+            // start time 2023-10-15T07:50:39Z fichier 9h50 (GMT+2)
+            // On change l'heure de fin à 15h15
+
+            // Tests
+            List<WayPoint> points = gpx.getTracks().get(0).getSegments().get(0).getPoints();
+            assertEquals("2023-10-15T13:15:40Z", points.get(points.size()-1).getTime().get().toString(),
+                    "Metadata - L'heure de fin n'est pas correcte.");
+        });
+    }
+
 }

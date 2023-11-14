@@ -6,6 +6,7 @@ import io.jenetics.jpx.GPX.Writer;
 import io.jenetics.jpx.GPX.Writer.Indent;
 import org.apache.commons.cli.*;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;

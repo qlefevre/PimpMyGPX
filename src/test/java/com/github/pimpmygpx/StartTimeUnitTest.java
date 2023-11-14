@@ -1,12 +1,14 @@
 package com.github.pimpmygpx;
 
 import io.jenetics.jpx.GPX;
+import io.jenetics.jpx.WayPoint;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,6 +36,20 @@ public class StartTimeUnitTest extends AbstractUnitTest{
             assertEquals("2023-10-15T10:12:39Z", gpx.getMetadata().get().getTime().get().toString(),
                     "Metadata - L'heure de début n'est pas correcte.");
             assertEquals("2023-10-15T10:12:39Z", gpx.getTracks().get(0).getSegments().get(0).getPoints().get(0).getTime().get().toString(),
+                    "Metadata - L'heure de début n'est pas correcte.");
+        });
+    }
+
+    @Test
+    public void testMainOptionStartTime() throws Exception {
+        testMain(GPX_LANDASIENNE, new String[]{"-s", "14:14"}, gpx -> {
+            // start time 2023-10-15T07:50:39Z fichier 9h50 (GMT+2)
+            // On change l'heure de fin à 15h15
+
+            // Tests
+            assertEquals("2023-10-15T12:14:39Z", gpx.getMetadata().get().getTime().get().toString(),
+                    "Metadata - L'heure de début n'est pas correcte.");
+            assertEquals("2023-10-15T12:14:39Z", gpx.getTracks().get(0).getSegments().get(0).getPoints().get(0).getTime().get().toString(),
                     "Metadata - L'heure de début n'est pas correcte.");
         });
     }

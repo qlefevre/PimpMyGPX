@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,6 +33,18 @@ public class InfoUnitTest extends AbstractUnitTest {
             String info = GpxUtils.info(gpx);
 
             assertEquals(EXPECTED_INFO, info,"Le message d'info n'est pas correct.");
+        });
+    }
+
+    @Test
+    public void testMainOptionStartTime() throws Exception {
+        // Set the standard output to use newConsole.
+        ByteArrayOutputStream newConsole = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(newConsole));
+
+        testMain(GPX_LANDASIENNE, new String[]{"-i"}, gpx -> {
+            // start time 2023-10-15T07:50:39Z fichier 9h50 (GMT+2)
+            assertEquals(EXPECTED_INFO, newConsole.toString().trim(),"Le message d'info n'est pas correct.");
         });
     }
 
