@@ -1,0 +1,13 @@
+name: CI - Building and testing
+on: [push]
+jobs:
+  build:
+    name: CI - Building and testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - run: mvn --batch-mode --update-snapshots --no-transfer-progress verify
