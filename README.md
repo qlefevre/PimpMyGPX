@@ -1,4 +1,5 @@
-[![Create executables](https://github.com/qlefevre/PimpMyGPX/actions/workflows/create-release.yml/badge.svg)](https://github.com/qlefevre/PimpMyGPX/actions/workflows/create-release.yml)
+[![CI - Building and testing](https://github.com/qlefevre/PimpMyGPX/actions/workflows/building-and-testing.yml/badge.svg)](https://github.com/qlefevre/PimpMyGPX/actions/workflows/building-and-testing.yml)
+[![CD - Build executable files](https://github.com/qlefevre/PimpMyGPX/actions/workflows/create-release.yml/badge.svg)](https://github.com/qlefevre/PimpMyGPX/actions/workflows/create-release.yml)
 
 # PimpMyGPX
 
