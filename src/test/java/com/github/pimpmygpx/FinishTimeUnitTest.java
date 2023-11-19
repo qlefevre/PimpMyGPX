@@ -1,11 +1,9 @@
 package com.github.pimpmygpx;
 
-import io.jenetics.jpx.GPX;
 import io.jenetics.jpx.WayPoint;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
