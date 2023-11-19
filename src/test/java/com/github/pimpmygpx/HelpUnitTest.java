@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class HelpUnitTest extends AbstractUnitTest {
 
-    private static final String EXPECTED_HELP = "PimpMyGPX 1.0 \n" +
+    private static final String EXPECTED_HELP = ("PimpMyGPX 1.0 \n" +
             "usage: pmgpx [OPTION]... [FILE]\n" +
             "Do something useful with a GPX file\n" +
             " -s,  --start-time <hour>     Change start time in hh:mm or hh:mm:ss format\n" +
@@ -23,7 +23,7 @@ public class HelpUnitTest extends AbstractUnitTest {
             " -o,  --output <file>         Set output file\n" +
             " -i,  --info                  Display info about the given GPX\n" +
             " -h,  --help                  Display help\n" +
-            "Please report issues at https://github.com/qlefevre/PimpMyGPX".replaceAll("\n",System.lineSeparator());
+            "Please report issues at https://github.com/qlefevre/PimpMyGPX").replace("\n",System.lineSeparator());
 
     @Test
     public void testMainOptionhelp() throws Exception {
