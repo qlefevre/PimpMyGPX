@@ -17,8 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class FinishTimeUnitTest extends AbstractUnitTest{
 
-    public static final String FILE = "/La_Landasienne_2023_5Km_20231015.gpx";
-
     @Test
     public void testOptionFinishTime() throws IOException {
         testGpx(GPX_LANDASIENNE, gpx -> {

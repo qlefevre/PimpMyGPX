@@ -25,6 +25,10 @@ public class AbstractUnitTest {
     }
 
     public void testMain(String ressourceFilename, String[] args, Consumer<GPX> function) throws Exception {
+        testMain( ressourceFilename,  null, args, function);
+    }
+
+    public void testMain(String ressourceFilename, String outputFilename, String[] args, Consumer<GPX> function) throws Exception {
         Path tmpDir = Files.createTempDirectory("pmgpx");
         Path tmpInputFile = tmpDir.resolve(ressourceFilename.substring(1));
         try(InputStream is = getClass().getResourceAsStream(ressourceFilename)) {
@@ -33,7 +37,9 @@ public class AbstractUnitTest {
         String[] testArgs = Arrays.copyOf(args,args.length+1);
         testArgs[args.length] = tmpInputFile.toString();
         MainCli.main(testArgs);
-        Path tmpOutputFile = tmpDir.resolve(ressourceFilename.substring(1).replace(".gpx",".out.gpx"));
+        String tmpOutputFileStr = outputFilename != null ? outputFilename :
+                ressourceFilename.substring(1).replace(".gpx",".out.gpx");
+        Path tmpOutputFile = tmpDir.resolve(tmpOutputFileStr);
         try(InputStream is = new FileInputStream(tmpOutputFile.toFile())) {
             GPX gpx = GPX.Reader.DEFAULT.read(is);
             function.accept(gpx);

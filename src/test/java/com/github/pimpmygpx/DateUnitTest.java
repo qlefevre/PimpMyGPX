@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class DateUnitTest extends AbstractUnitTest{
 
-
-
     @Test
     public void testOptionDate() throws IOException {
         testGpx(GPX_LANDASIENNE, gpx -> {

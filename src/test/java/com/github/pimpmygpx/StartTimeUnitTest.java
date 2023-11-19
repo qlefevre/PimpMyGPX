@@ -17,8 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class StartTimeUnitTest extends AbstractUnitTest{
 
-    public static final String FILE = "/La_Landasienne_2023_5Km_20231015.gpx";
-
     @Test
     public void testOptionStartTime() throws IOException {
 
