@@ -23,7 +23,7 @@ public class HelpUnitTest extends AbstractUnitTest {
             " -o,  --output <file>         Set output file\n" +
             " -i,  --info                  Display info about the given GPX\n" +
             " -h,  --help                  Display help\n" +
-            "Please report issues at https://github.com/qlefevre/PimpMyGPX";
+            "Please report issues at https://github.com/qlefevre/PimpMyGPX".replace("\n",System.lineSeparator());
 
     @Test
     public void testMainOptionhelp() throws Exception {
