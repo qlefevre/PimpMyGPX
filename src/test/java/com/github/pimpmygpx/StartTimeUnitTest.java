@@ -48,4 +48,18 @@ public class StartTimeUnitTest extends AbstractUnitTest{
         });
     }
 
+    @Test
+    public void testMainOptionStartTimeRoostWarendin() throws Exception {
+        testMain(GPX_ROOST_WARENDIN, new String[]{"-s", "14:14"}, gpx -> {
+            // start time 2023-10-15T07:50:39Z fichier 9h50 (GMT+2)
+            // On change l'heure de fin à 15h15
+
+            // Tests
+            assertEquals("2023-11-10T13:14:03Z", gpx.getMetadata().get().getTime().get().toString(),
+                    "Metadata - L'heure de début n'est pas correcte.");
+            assertEquals("2023-11-10T13:14:03Z", gpx.getTracks().get(0).getSegments().get(0).getPoints().get(0).getTime().get().toString(),
+                    "Metadata - L'heure de début n'est pas correcte.");
+        });
+    }
+
 }

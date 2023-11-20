@@ -43,5 +43,19 @@ public class LongitudeUnitTest extends AbstractUnitTest {
         });
     }
 
+    @Test
+    public void testMainOptionLatitudeDouai() throws Exception {
+        testMain(GPX_DOUAI, new String[]{"-lon", "0.011"}, gpx -> {
+            // <trkpt lat="50.3797900" lon="3.0748300">
+            // <trkpt lat="50.3798120" lon="3.0747730">
+
+            // Tests
+            assertEquals(3.0858300, gpx.getTracks().get(0).getSegments().get(0).getPoints().get(0).getLongitude().doubleValue(),
+                    "La longitude n'est pas correcte.");
+            assertEquals(3.0857730, gpx.getTracks().get(0).getSegments().get(0).getPoints().get(1).getLongitude().doubleValue(),
+                    "La longitude n'est pas correcte.");
+        });
+    }
+
 }
 
