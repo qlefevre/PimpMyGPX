@@ -44,7 +44,6 @@ public class CustomHelpFormatter extends HelpFormatter {
             case 1:
                 return "  --";
             case 3:
-                return "--";
             default:
                 return "--";
         }
