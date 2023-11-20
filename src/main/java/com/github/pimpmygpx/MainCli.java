@@ -16,6 +16,13 @@ public class MainCli {
     public static final int DEFAULT_FRACTION_DIGITS = 7;
     public static final Indent DEFAULT_INDENT = new Indent(" ");
 
+    /**
+     * Private constructor
+     */
+    private MainCli() {
+        // Utility class
+    }
+
     public static void main(String[] args) throws Exception {
 
         // gui PimpMyGPX.exe

@@ -17,6 +17,13 @@ import static java.lang.Math.rint;
 
 public class GpxUtils {
 
+    /**
+     * Private constructor - utility class
+     */
+    private GpxUtils() {
+        // Utility class
+    }
+
     public static GPX changeFinishTime(GPX gpx, LocalTime localTime) {
         Instant currentFinishTimeInstant = streamWayPoint(gpx,WayPoint::getTime).max(Instant::compareTo).get();
         int deltaMinutes = deltaMinutes(currentFinishTimeInstant,localTime);
