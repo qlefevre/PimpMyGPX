@@ -18,6 +18,11 @@ public class AbstractUnitTest {
 
     public static final String GPX_ROOST_WARENDIN = "/Course_pied_le_midi_Roost_Warendin.gpx";
 
+    public static final String GPX_LABASSEE = "/Course_pied_mal_positionne_LaBassee.gpx";
+
+
+
+
     public void testGpx(String ressourceFilename, Consumer<GPX> function) throws IOException {
         try(InputStream is = getClass().getResourceAsStream(ressourceFilename)) {
             GPX gpx = GPX.Reader.DEFAULT.read(is);
